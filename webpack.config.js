@@ -8,7 +8,7 @@ const PATHS = {
 
 const commonConfig = {
   entry: {
-    app: PATHS.app
+    app: PATHS.app,
   },
   output: {
     path: PATHS.build,
@@ -19,7 +19,7 @@ const commonConfig = {
       title: 'Webpack demo',
     }),
   ],
-}
+};
 
 const productionConfig = () => commonConfig;
 
@@ -30,6 +30,22 @@ const developmentConfig = () => {
       stats: 'errors-only',
       host: process.env.HOST,
       port: process.env.PORT,
+      overlay: {
+        errors: true,
+        warnings: true,
+      },
+    },
+    module: {
+      rules: [
+        {
+          test: /\.js$/,
+          enforce: 'pre',
+          loader: 'eslint-loader',
+          options: {
+            emitWarning: true,
+          }
+        }
+      ]
     },
   };
 
@@ -38,12 +54,12 @@ const developmentConfig = () => {
     commonConfig,
     config
   );
-}
+};
 
 module.exports = (env) => {
   if (env === 'production') {
     return productionConfig();
   }
-  
+
   return developmentConfig();
-}
+};
