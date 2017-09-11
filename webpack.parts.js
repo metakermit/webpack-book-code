@@ -26,3 +26,16 @@ exports.lintJavaScript = ({ include, exclude, options }) => ({
     ],
   },
 });
+
+exports.loadCSS = ({ include, exclude } = {}) => ({
+  module: {
+    rules: [{
+      test: /\.css$/,
+      include,
+      exclude,
+
+      // interpret order as styleLoader(cssLoader(input))
+      use: ['style-loader', 'css-loader'],
+    }],
+  },
+});
