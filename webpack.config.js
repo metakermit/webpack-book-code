@@ -6,37 +6,37 @@ const parts = require('./webpack.parts');
 
 const PATHS = {
   app: path.join(__dirname, 'app'),
-  build: path.join(__dirname, 'build'),
+  build: path.join(__dirname, 'build')
 };
 
 const commonConfig = merge([
   {
     entry: {
-      app: PATHS.app,
+      app: PATHS.app
     },
     output: {
       path: PATHS.build,
-      filename: '[name].js',
+      filename: '[name].js'
     },
     plugins: [
       new HtmlWebpackPlugin({
-        title: 'Webpack demo',
+        title: 'Webpack demo'
       }),
-    ],
+    ]
   },
   parts.lintJavaScript({ include: PATHS.app }),
 ]);
 
 const productionConfig = merge([
   parts.extractCSS({
-    use: ['css-loader', parts.autoprefix()],
+    use: ['css-loader', parts.autoprefix()]
   }),
 ]);
 
 const developmentConfig = merge([
   parts.devServer({
     host: process.env.HOST,
-    port: process.env.PORT,
+    port: process.env.PORT
   }),
   parts.loadCSS(),
 ]);
